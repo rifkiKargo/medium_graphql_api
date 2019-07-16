@@ -34,7 +34,7 @@ defmodule MediumGraphqlApi.Accounts.User do
     |> hash_password
   end
 
-  defp hash_password(changeset) do
-    changeset
+  defp hash_password(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeSet) do
+    change(changeSet, Argon2.add_hash(password))
   end
 end
