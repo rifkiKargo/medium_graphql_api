@@ -1,6 +1,7 @@
 defmodule MediumGraphqlApiWeb.Schema do
   use Absinthe.Schema
   alias MediumGraphqlApiWeb.Resolvers
+  alias MediumGraphqlApiWeb.Schema.Middleware
   # import Types
   import_types(MediumGraphqlApiWeb.Schema.Types)
 
@@ -8,6 +9,7 @@ defmodule MediumGraphqlApiWeb.Schema do
     @desc "get list of all users"
     field :users, list_of(:user_type) do
       # Resolver
+      middleware(Middleware.Authorize, "user")
       resolve(&Resolvers.UserResolver.users/3)
     end
   end
