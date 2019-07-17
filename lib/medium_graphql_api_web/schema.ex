@@ -26,6 +26,20 @@ defmodule MediumGraphqlApiWeb.Schema do
       arg(:input, non_null(:session_input_type))
       resolve(&Resolvers.SessionResolver.login/3)
     end
+
+    @desc "create a post"
+    field :create_post, type: :post_type do
+      middleware(Middleware.Authorize, :any)
+      arg(:input, non_null(:post_input_type))
+      resolve(&Resolvers.PostResolver.create_post/3)
+    end
+
+    @desc "create a comment"
+    field :create_comment, type: :comment_type do
+      middleware(Middleware.Authorize, :any)
+      arg(:input, non_null(:comment_input_type))
+      resolve(&Resolvers.CommentResolver.create_comment/3)
+    end
   end
 
   # subscription do
